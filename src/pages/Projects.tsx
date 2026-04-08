@@ -5,7 +5,7 @@ export default function Projects() {
   return (
     <div>
       <h1>Page Projects</h1>
-      <p>Ceci est la page des projets</p>
+      <p className="text-blue-500">Ceci est la page des projets</p>
     </div>
   );
 }
