@@ -5,6 +5,7 @@ Ce fichier explique comment ajouter ou modifier les compétences et projets du p
 ## 📂 Structure
 
 Le fichier `skills.ts` contient toutes les données centralisées :
+
 - **`skillsData`** : Les catégories de compétences avec leurs icônes et listes de technologies
 - **`techToProjects`** : Le mapping entre chaque technologie et les projets qui l'utilisent
 - **`tabs`** : L'ordre d'affichage des onglets
@@ -32,7 +33,7 @@ Si la technologie est utilisée dans des projets, ajouter une entrée dans `tech
 ```typescript
 export const techToProjects: Record<string, string[]> = {
   // ... autres technologies
-  "Nouvelle Techno": ["Projet Alpha", "Projet Beta"]
+  "Nouvelle Techno": ["Projet Alpha", "Projet Beta"],
 };
 ```
 
@@ -62,8 +63,8 @@ export const skillsData: SkillsData = {
   nouvelle: {
     icon: NouvelleIcon,
     label: "Nouvelle Catégorie",
-    skills: ["Tech1", "Tech2", "Tech3"]
-  }
+    skills: ["Tech1", "Tech2", "Tech3"],
+  },
 };
 ```
 
@@ -80,12 +81,14 @@ export const tabs: SkillCategory[] = ["languages", "frontend", "backend", "datab
 Si un projet change de nom, il suffit de modifier toutes ses occurrences dans `techToProjects` :
 
 **Avant** :
+
 ```typescript
 "React": ["Ancien Nom", "Projet B"],
 "Docker": ["Ancien Nom", "Projet C"]
 ```
 
 **Après** :
+
 ```typescript
 "React": ["Nouveau Nom", "Projet B"],
 "Docker": ["Nouveau Nom", "Projet C"]
