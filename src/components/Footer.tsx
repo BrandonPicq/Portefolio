@@ -5,9 +5,7 @@ export default function Footer() {
   return (
     <footer className="mt-auto bg-glass-light backdrop-blur-glass-xl border-t border-glass shadow-glass-lg">
       <div className="container mx-auto px-6 py-6">
-        <p className="text-white/60 text-sm text-center drop-shadow-md">
-          &copy; 2026 Portfolio. Tous droits réservés.
-        </p>
+        <p className="text-white/60 text-sm text-center drop-shadow-md">&copy; 2026 Portfolio. Tous droits réservés.</p>
       </div>
     </footer>
   );
