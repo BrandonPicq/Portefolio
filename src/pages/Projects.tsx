@@ -2,6 +2,7 @@
 // Page Projets — Liste filtrable de projets
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { ExternalLink, Filter, GitBranch } from "lucide-react";
 import { projects, categoryLabels } from "../data/projects";
 import type { ProjectCategory } from "../data/projects";
@@ -107,16 +108,18 @@ export default function Projects() {
               key={project.id}
               className="bg-glass-light backdrop-blur-glass-xl border border-white/10 rounded-2xl p-6 shadow-glass-lg hover:bg-glass-medium hover:border-white/20 transition-all duration-300 group flex flex-col"
             >
-              {/* En-tête */}
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <h3 className="text-xl font-semibold text-white group-hover:text-white/95">{project.title}</h3>
-                  <p className="text-white/50 text-sm mt-1">{project.subtitle}</p>
+              {/* En-tête — cliquable */}
+              <Link to={`/projects/${project.id}`} className="block mb-3">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold text-white group-hover:text-white/95">{project.title}</h3>
+                    <p className="text-white/50 text-sm mt-1">{project.subtitle}</p>
+                  </div>
+                  <span className="px-3 py-1 text-xs bg-white/5 border border-white/10 rounded-full text-white/40 whitespace-nowrap">
+                    {categoryLabels[project.category]}
+                  </span>
                 </div>
-                <span className="px-3 py-1 text-xs bg-white/5 border border-white/10 rounded-full text-white/40 whitespace-nowrap">
-                  {categoryLabels[project.category]}
-                </span>
-              </div>
+              </Link>
 
               {/* Description */}
               <p className="text-white/60 text-sm leading-relaxed mb-4">{project.description}</p>
@@ -146,8 +149,8 @@ export default function Projects() {
               </div>
 
               {/* Liens */}
-              {(project.github || project.demo) && (
-                <div className="flex gap-3 pt-3 border-t border-white/5">
+              <div className="flex items-center justify-between pt-3 border-t border-white/5">
+                <div className="flex gap-3">
                   {project.github && (
                     <a
                       href={project.github}
@@ -171,7 +174,13 @@ export default function Projects() {
                     </a>
                   )}
                 </div>
-              )}
+                <Link
+                  to={`/projects/${project.id}`}
+                  className="text-white/30 hover:text-white text-xs transition-colors"
+                >
+                  Voir détails →
+                </Link>
+              </div>
             </article>
           ))}
         </div>

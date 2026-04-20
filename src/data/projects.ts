@@ -8,9 +8,11 @@ export interface Project {
   title: string;
   subtitle: string;
   description: string;
+  longDescription?: string;
   category: ProjectCategory;
   tags: string[];
   highlights: string[];
+  architecture?: string;
   github?: string;
   demo?: string;
 }
@@ -29,7 +31,7 @@ export const projects: Project[] = [
     subtitle: "Réseau social — Migration Spring Boot",
     description:
       "Réseau social inspiré de LinkedIn, migré de Laravel vers Spring Boot. Authentification JWT, gestion de posts/commentaires/likes, système d'équipes et recherche d'utilisateurs.",
-    category: "fullstack",
+    category: "backend",
     tags: ["React", "Spring Boot", "TypeScript", "MySQL", "Docker", "JWT", "Tailwind CSS"],
     highlights: [
       "Migration backend Laravel → Spring Boot",
@@ -37,6 +39,9 @@ export const projects: Project[] = [
       "30+ endpoints REST",
       "Système d'équipes collaboratif",
     ],
+    longDescription:
+      "Évolution majeure de Connect'In avec migration complète du backend de Laravel/PHP vers Spring Boot/Java. Le frontend React reste identique, démontrant la séparation propre entre front et back. L'authentification passe par JWT Bearer tokens (expiration 24h) avec Spring Security. Ajout d'un système de teams : création d'équipes, invitation de membres et posts collaboratifs. L'API expose 30+ endpoints pour l'auth, les users, posts, commentaires et teams.",
+    architecture: "React + Vite (Frontend) → Spring Boot 4 + JWT (API REST) → MySQL 8.0 | Docker Compose",
   },
   {
     id: "connectin",
@@ -52,6 +57,9 @@ export const projects: Project[] = [
       "CRUD complet posts/commentaires",
       "Conteneurisé avec Docker Compose",
     ],
+    longDescription:
+      "Première version du réseau social type LinkedIn. Frontend SPA React avec Vite et Tailwind CSS, backend API REST Laravel 8 avec PHP 8.4. Fonctionnalités complètes : inscription, authentification, création/édition/suppression de posts avec upload d'images, système de likes, commentaires avec modération, gestion d'avatars et profils utilisateurs. Entièrement conteneurisé avec Docker Compose.",
+    architecture: "React + Vite + Tailwind (Frontend) → Laravel 8 + PHP 8.4 (API) → MySQL 8.0 | Docker Compose",
   },
   {
     id: "my-cinema",
@@ -67,6 +75,9 @@ export const projects: Project[] = [
       "Soft delete avec cascade",
       "Validation et gestion d'erreurs",
     ],
+    longDescription:
+      "Application complète de gestion de cinéma avec une API RESTful et un frontend SPA. Permet la gestion CRUD de films, salles et séances avec une logique métier avancée : détection automatique des conflits de planification entre séances, suppression douce (soft delete) avec cascade, et validation des données côté serveur. L'API expose 15+ endpoints RESTful bien structurés.",
+    architecture: "HTML/CSS/JS (Frontend SPA) → PHP 8.5 + PDO (API REST) → MySQL | Docker",
   },
   {
     id: "cv-later",
@@ -82,6 +93,9 @@ export const projects: Project[] = [
       "Formulaire dynamique add/edit/delete",
       "Design responsive Bootstrap",
     ],
+    longDescription:
+      "Application web de création de CV professionnel. L'utilisateur remplit un formulaire complet (informations personnelles, expérience, formation, compétences) avec prévisualisation en temps réel du rendu final. Possibilité d'ajouter, modifier et supprimer des entrées dynamiquement. Export en PDF haute qualité grâce à la librairie Dompdf. Interface responsive construite avec Bootstrap 5.",
+    architecture: "PHP 8.0 + Dompdf (Backend) → Bootstrap 5 + JavaScript (Frontend)",
   },
   {
     id: "popeye",
@@ -92,6 +106,9 @@ export const projects: Project[] = [
     category: "devops",
     tags: ["Docker", "Python", "Node.js", "Java", "Redis", "PostgreSQL", "Docker Compose"],
     highlights: ["Architecture 3-tier microservices", "3 langages différents", "Message queue Redis", "Orchestration Docker Compose"],
+    longDescription:
+      "Application de sondage distribuée en architecture microservices, chaque service étant développé dans un langage différent. Le service Poll (Python/Flask) gère les votes via une interface web, Redis sert de message queue, le Worker (Java/Maven) traite les votes et les persiste dans PostgreSQL, et le service Result (Node.js/Express) affiche les résultats en temps réel. L'ensemble est orchestré avec Docker Compose.",
+    architecture: "Poll (Flask/Python) → Redis (Queue) → Worker (Java/Maven) → PostgreSQL ← Result (Node.js/Express)",
   },
   {
     id: "portfolio-jekyll",
@@ -102,6 +119,9 @@ export const projects: Project[] = [
     category: "frontend",
     tags: ["Jekyll", "Ruby", "HTML/CSS", "Markdown"],
     highlights: ["Génération statique Jekyll", "SEO avec Jekyll-SEO-tag", "Templates Liquid", "Refactoré → Portfolio actuel"],
+    longDescription:
+      "Version précédente du portfolio construite avec le générateur de sites statiques Jekyll et Ruby. Utilise le thème Minima avec des pages Markdown pour les sections About, Contact et Projects. Optimisé pour le SEO avec Jekyll-SEO-tag. Ce projet est la base qui a été entièrement refactorée vers l'architecture React + Vite + TypeScript actuelle.",
+    architecture: "Jekyll 4.3 + Ruby → HTML statique | GitHub Pages",
   },
   {
     id: "portfolio-html",
@@ -111,6 +131,13 @@ export const projects: Project[] = [
     category: "frontend",
     tags: ["HTML/CSS", "Tailwind CSS", "JavaScript"],
     highlights: ["Version HTML/CSS pure", "Version Tailwind CSS", "Déployé sur GitHub Pages", "Responsive design"],
+    longDescription:
+      "Exercice d'apprentissage frontend réalisé en deux versions parallèles : une version HTML/CSS/JS pure et une version utilisant Tailwind CSS. Les deux versions reproduisent le même design pour comparer les approches. Déployé sur GitHub Pages pour démontrer le workflow de déploiement statique.",
+    architecture: "HTML/CSS/JS + Tailwind CSS | GitHub Pages",
     demo: "https://brandonpicq.github.io/html_css/",
   },
 ];
+
+export function getProjectById(id: string): Project | undefined {
+  return projects.find((p) => p.id === id);
+}

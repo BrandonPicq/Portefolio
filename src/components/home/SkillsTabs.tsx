@@ -2,7 +2,8 @@
 // Section compétences avec système d'onglets et mapping projets
 
 import { useState } from "react";
-import { skillsData, techToProjects, tabs } from "../../data/skills";
+import { Link } from "react-router-dom";
+import { skillsData, techToProjects, tabs, projectNameToId } from "../../data/skills";
 import type { SkillCategory } from "../../data/skills";
 
 export default function SkillsTabs() {
@@ -76,11 +77,22 @@ export default function SkillsTabs() {
                 Projets utilisant <span className="text-white font-semibold">{selectedSkill}</span> :
               </p>
               <div className="flex flex-wrap gap-2 justify-center">
-                {techToProjects[selectedSkill].map((project) => (
-                  <span key={project} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs text-white/80">
-                    {project}
-                  </span>
-                ))}
+                {techToProjects[selectedSkill].map((project) => {
+                  const projectId = projectNameToId[project];
+                  return projectId ? (
+                    <Link
+                      key={project}
+                      to={`/projects/${projectId}`}
+                      className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs text-white/80 hover:bg-white/15 hover:border-white/20 hover:text-white transition-all"
+                    >
+                      {project}
+                    </Link>
+                  ) : (
+                    <span key={project} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs text-white/80">
+                      {project}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           )}
