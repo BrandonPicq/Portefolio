@@ -47,7 +47,7 @@ export default function HeroSection() {
         {/* Call-to-Actions */}
         <div className="flex flex-wrap gap-4 justify-center pt-6">
           <a
-            href="#projects"
+            href="/projects"
             className="group px-8 py-4 bg-white/20 hover:bg-white/30 backdrop-blur-glass border border-white/30 hover:border-white/50 rounded-xl text-white font-medium transition-all duration-300 hover:scale-105 shadow-glass-lg hover:shadow-glass-lg flex items-center gap-2"
           >
             Voir mes projets
