@@ -1,5 +1,5 @@
 // src/components/home/HeroSection.tsx
-// Section Hero avec titre, CTAs et scroll indicator
+// Section Hero — noir & blanc avec accents dorés
 
 import { useState, useEffect } from "react";
 
@@ -28,27 +28,24 @@ export default function HeroSection() {
 
   return (
     <section className="py-32 text-center relative">
-      {/* Cercle décoratif supplémentaire centré */}
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/10 rounded-full filter blur-3xl -z-10 animate-pulse"></div>
-
       <div className="max-w-4xl mx-auto space-y-8">
-        {/* Titre principal avec gradient */}
-        <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent drop-shadow-2xl tracking-tight">
-          Hey, je suis Brandon
-          <span className="block mt-2 bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">Développeur Full-Stack</span>
+        {/* Titre principal */}
+        <h1 className="text-6xl md:text-7xl font-bold tracking-tight">
+          <span className="text-white">Hey, je suis Brandon</span>
+          <span className="block mt-2 text-gold-gradient">Développeur Full-Stack</span>
         </h1>
 
         {/* Sous-titre */}
-        <p className="text-xl md:text-2xl text-white/70 max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
+        <p className="text-xl md:text-2xl text-muted-light max-w-2xl mx-auto leading-relaxed">
           Passionné par la création d'applications web modernes et scalables.
-          <span className="block mt-2 text-white/50 text-lg">React • TypeScript • Spring Boot • Laravel</span>
+          <span className="block mt-2 text-muted text-lg">React • TypeScript • Spring Boot • Laravel</span>
         </p>
 
         {/* Call-to-Actions */}
         <div className="flex flex-wrap gap-4 justify-center pt-6">
           <a
             href="/projects"
-            className="group px-8 py-4 bg-white/20 hover:bg-white/30 backdrop-blur-glass border border-white/30 hover:border-white/50 rounded-xl text-white font-medium transition-all duration-300 hover:scale-105 shadow-glass-lg hover:shadow-glass-lg flex items-center gap-2"
+            className="group px-8 py-4 bg-transparent border border-gold/60 hover:bg-gold hover:border-gold rounded-xl text-gold hover:text-black font-medium transition-all duration-300 hover:scale-105 shadow-glow hover:shadow-glow-lg flex items-center gap-2"
           >
             Voir mes projets
             <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,7 +57,7 @@ export default function HeroSection() {
             href="https://github.com/BrandonPicq"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-8 py-4 bg-glass-light hover:bg-glass-medium backdrop-blur-sm border border-white/10 hover:border-white/20 rounded-xl text-white/80 hover:text-white font-medium transition-all duration-300 hover:scale-105 flex items-center gap-2"
+            className="px-8 py-4 bg-transparent border border-border-hover hover:border-gold/40 rounded-xl text-muted hover:text-gold-light font-medium transition-all duration-300 hover:scale-105 flex items-center gap-2"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path
@@ -74,7 +71,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll Indicator - Cliquable */}
+      {/* Scroll Indicator */}
       {!scrollIndicatorHidden && (
         <button
           onClick={() => {
@@ -89,9 +86,9 @@ export default function HeroSection() {
           aria-label="Scroll to skills section"
         >
           <div className="flex flex-col items-center gap-2">
-            <span className="text-white/40 group-hover:text-white/60 text-sm transition-colors">Scroll</span>
+            <span className="text-muted-dark group-hover:text-gold/60 text-sm transition-colors">Scroll</span>
             <svg
-              className="w-6 h-6 text-white/40 group-hover:text-white/60 transition-colors"
+              className="w-6 h-6 text-muted-dark group-hover:text-gold/60 transition-colors"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

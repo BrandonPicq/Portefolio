@@ -3,31 +3,40 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      colors: {
-        // Palette neutre élégante pour liquid glass
-        glass: {
-          light: "rgba(255, 255, 255, 0.05)",
-          DEFAULT: "rgba(255, 255, 255, 0.10)",
-          medium: "rgba(255, 255, 255, 0.15)",
-          dark: "rgba(0, 0, 0, 0.20)",
-        },
-        border: {
-          glass: "rgba(255, 255, 255, 0.15)",
-          "glass-dark": "rgba(0, 0, 0, 0.10)",
-        },
+      fontFamily: {
+        sans: ['"Space Grotesk"', "system-ui", "sans-serif"],
       },
-      backdropBlur: {
-        xs: "2px",
-        glass: "20px",
-        "glass-xl": "40px",
+      colors: {
+        // Surfaces noires
+        surface: {
+          DEFAULT: "#0a0a0a",
+          elevated: "#111111",
+          card: "#141414",
+          hover: "#1a1a1a",
+        },
+        // Bordures & séparateurs
+        border: {
+          DEFAULT: "#1f1f1f",
+          subtle: "#181818",
+          hover: "#2a2a2a",
+        },
+        // Texte
+        muted: {
+          DEFAULT: "#888888",
+          dark: "#555555",
+          light: "#aaaaaa",
+        },
+        // Or — accent principal
+        gold: {
+          dark: "#B8941F",
+          DEFAULT: "#D4AF37",
+          light: "#E8D48B",
+        },
       },
       boxShadow: {
-        glass: "0 8px 32px 0 rgba(0, 0, 0, 0.1)",
-        "glass-lg": "0 12px 48px 0 rgba(0, 0, 0, 0.15)",
-      },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "glass-gradient": "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
+        glow: "0 0 20px rgba(212, 175, 55, 0.08)",
+        "glow-lg": "0 0 40px rgba(212, 175, 55, 0.12)",
+        card: "0 4px 24px rgba(0, 0, 0, 0.4)",
       },
     },
   },

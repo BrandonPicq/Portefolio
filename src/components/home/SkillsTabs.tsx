@@ -1,5 +1,5 @@
 // src/components/home/SkillsTabs.tsx
-// Section compétences avec système d'onglets et mapping projets
+// Section compétences — onglets noir & blanc avec accents dorés
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -12,7 +12,9 @@ export default function SkillsTabs() {
 
   return (
     <section id="skills-section" className="py-12">
-      <h2 className="text-3xl font-bold text-white mb-12 text-center drop-shadow-lg">Mes Compétences Techniques</h2>
+      <h2 className="text-3xl font-bold text-white mb-12 text-center">
+        Mes <span className="text-gold">Compétences</span> Techniques
+      </h2>
 
       <div className="max-w-4xl mx-auto">
         {/* Tabs Navigation */}
@@ -30,8 +32,8 @@ export default function SkillsTabs() {
                   transition-all duration-300 transform hover:scale-105
                   ${
                     isActive ?
-                      "bg-white/20 backdrop-blur-glass border-2 border-white/40 text-white shadow-glass-lg"
-                    : "bg-glass-light backdrop-blur-sm border border-white/10 text-white/60 hover:text-white hover:bg-white/10"
+                      "bg-surface-card border border-gold/40 text-gold shadow-glow"
+                    : "bg-surface border border-border text-muted hover:text-gold-light hover:border-border-hover"
                   }
                 `}
               >
@@ -43,7 +45,7 @@ export default function SkillsTabs() {
         </div>
 
         {/* Contenu actif */}
-        <div className="bg-glass-light backdrop-blur-glass-xl border border-glass rounded-2xl p-8 shadow-glass-lg min-h-[200px] animate-slideIn">
+        <div className="bg-surface-card border border-border rounded-2xl p-8 shadow-card min-h-[200px] animate-slideIn">
           <div className="flex flex-wrap gap-3 justify-center">
             {skillsData[activeTab].skills.map((skill) => {
               const isSelected = selectedSkill === skill;
@@ -55,13 +57,13 @@ export default function SkillsTabs() {
                   onClick={() => setSelectedSkill(isSelected ? null : skill)}
                   disabled={!hasProjects}
                   className={`
-                    px-4 py-2 backdrop-blur-sm border rounded-full text-sm transition-all duration-200
+                    px-4 py-2 border rounded-full text-sm transition-all duration-200
                     ${
                       isSelected ?
-                        "bg-white/25 border-white/40 text-white scale-105 shadow-lg"
-                      : "bg-white/10 border-white/20 text-white/90 hover:bg-white/20 hover:scale-105"
+                        "bg-gold/10 border-gold/50 text-gold scale-105 shadow-glow"
+                      : "bg-surface-elevated border-border text-muted-light hover:border-gold/30 hover:text-gold-light hover:scale-105"
                     }
-                    ${hasProjects ? "cursor-pointer" : "cursor-default opacity-60"}
+                    ${hasProjects ? "cursor-pointer" : "cursor-default opacity-40"}
                   `}
                 >
                   {skill}
@@ -72,9 +74,9 @@ export default function SkillsTabs() {
 
           {/* Affichage des projets pour la techno sélectionnée */}
           {selectedSkill && techToProjects[selectedSkill] && (
-            <div className="mt-6 pt-6 border-t border-white/10 animate-slideIn">
-              <p className="text-white/70 text-sm mb-3 text-center">
-                Projets utilisant <span className="text-white font-semibold">{selectedSkill}</span> :
+            <div className="mt-6 pt-6 border-t border-border animate-slideIn">
+              <p className="text-muted text-sm mb-3 text-center">
+                Projets utilisant <span className="text-gold font-semibold">{selectedSkill}</span> :
               </p>
               <div className="flex flex-wrap gap-2 justify-center">
                 {techToProjects[selectedSkill].map((project) => {
@@ -83,12 +85,12 @@ export default function SkillsTabs() {
                     <Link
                       key={project}
                       to={`/projects/${projectId}`}
-                      className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs text-white/80 hover:bg-white/15 hover:border-white/20 hover:text-white transition-all"
+                      className="px-3 py-1.5 bg-surface-elevated border border-border rounded-lg text-xs text-muted hover:border-gold/30 hover:text-gold-light transition-all"
                     >
                       {project}
                     </Link>
                   ) : (
-                    <span key={project} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs text-white/80">
+                    <span key={project} className="px-3 py-1.5 bg-surface-elevated border border-border rounded-lg text-xs text-muted-dark">
                       {project}
                     </span>
                   );
