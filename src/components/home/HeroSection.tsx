@@ -1,103 +1,84 @@
-// src/components/home/HeroSection.tsx
-// Section Hero — noir & blanc avec accents dorés
-
-import { useState, useEffect } from "react";
+import { ArrowRight, Sparkles, Layers } from "lucide-react";
+import { Link } from "react-router-dom";
+import { GithubIcon } from "../icons/SocialIcons";
 
 export default function HeroSection() {
-  const [scrollIndicatorVisible, setScrollIndicatorVisible] = useState(false);
-  const [scrollIndicatorHidden, setScrollIndicatorHidden] = useState(false);
-
-  useEffect(() => {
-    const showTimeout = setTimeout(() => {
-      setScrollIndicatorVisible(true);
-    }, 1500);
-
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setScrollIndicatorHidden(true);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      clearTimeout(showTimeout);
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
-    <section className="py-32 text-center relative">
-      <div className="max-w-4xl mx-auto space-y-8">
-        {/* Titre principal */}
-        <h1 className="text-6xl md:text-7xl font-bold tracking-tight">
-          <span className="text-white">Hey, je suis Brandon</span>
-          <span className="block mt-2 text-gold-gradient">Développeur Full-Stack</span>
-        </h1>
-
-        {/* Sous-titre */}
-        <p className="text-xl md:text-2xl text-muted-light max-w-2xl mx-auto leading-relaxed">
-          Passionné par la création d'applications web modernes et scalables.
-          <span className="block mt-2 text-muted text-lg">React • TypeScript • Spring Boot • Laravel</span>
-        </p>
-
-        {/* Call-to-Actions */}
-        <div className="flex flex-wrap gap-4 justify-center pt-6">
-          <a
-            href="/projects"
-            className="group px-8 py-4 bg-transparent border border-gold/60 hover:bg-gold hover:border-gold rounded-xl text-gold hover:text-black font-medium transition-all duration-300 hover:scale-105 shadow-glow hover:shadow-glow-lg flex items-center gap-2"
-          >
-            Voir mes projets
-            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-
-          <a
-            href="https://github.com/BrandonPicq"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-8 py-4 bg-transparent border border-border-hover hover:border-gold/40 rounded-xl text-muted hover:text-gold-light font-medium transition-all duration-300 hover:scale-105 flex items-center gap-2"
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                fillRule="evenodd"
-                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                clipRule="evenodd"
-              />
-            </svg>
-            GitHub
-          </a>
-        </div>
+    <section className="py-12 sm:py-20 text-center relative max-w-4xl mx-auto space-y-6">
+      {/* Badge de statut / disponibilité */}
+      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono bg-vermillon/10 text-vermillon border border-vermillon/25 dark:bg-gold/10 dark:text-gold dark:border-gold/30 shadow-sm animate-fadeIn">
+        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+        <span>Développeur Full-Stack • Web@cadémie by Epitech</span>
       </div>
 
-      {/* Scroll Indicator */}
-      {!scrollIndicatorHidden && (
-        <button
-          onClick={() => {
-            document.getElementById("skills-section")?.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }}
-          className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-opacity duration-700 cursor-pointer group ${
-            scrollIndicatorVisible ? "opacity-100" : "opacity-0"
-          }`}
-          aria-label="Scroll to skills section"
+      {/* Titre Principal Editorial & Tech */}
+      <div className="space-y-2">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-ink dark:text-white leading-[1.08]">
+          <span className="font-editorial italic font-normal block sm:inline">Créateur d'</span>
+          <span className="text-accent-gradient font-black">Applications Web</span>
+          <span className="block mt-1 font-sans font-extrabold text-3xl sm:text-5xl md:text-6xl">
+            Modernes & Résilientes
+          </span>
+        </h1>
+      </div>
+
+      {/* Description */}
+      <p className="text-base sm:text-lg md:text-xl text-ink-stoned dark:text-muted max-w-2xl mx-auto leading-relaxed">
+        Je conçois des architectures découplées, des interfaces interactives soignées et des APIs performantes.
+        <span className="block mt-1 text-sm font-mono text-ink-sepia dark:text-muted-dark">
+          React 19 • TypeScript • Spring Boot • Node.js • Docker • n8n IA
+        </span>
+      </p>
+
+      {/* Actions principales */}
+      <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
+        <a
+          href="#featured-demos"
+          className="px-6 py-3.5 rounded-xl font-semibold text-xs sm:text-sm bg-vermillon text-white hover:bg-vermillon-titled dark:bg-gold dark:text-black dark:hover:bg-gold-light transition-all duration-300 shadow-md hover:scale-105 flex items-center gap-2 cursor-pointer"
         >
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-muted-dark group-hover:text-gold/60 text-sm transition-colors">Scroll</span>
-            <svg
-              className="w-6 h-6 text-muted-dark group-hover:text-gold/60 transition-colors"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </div>
-        </button>
-      )}
+          <Sparkles size={16} />
+          Tester les démos en direct
+          <ArrowRight size={16} />
+        </a>
+
+        <Link
+          to="/projects"
+          className="px-6 py-3.5 rounded-xl font-medium text-xs sm:text-sm border border-[#d8d2c2] dark:border-border bg-paper-snow dark:bg-surface-elevated text-ink dark:text-white hover:border-vermillon dark:hover:border-gold transition-all duration-300 hover:scale-105 shadow-sm flex items-center gap-2"
+        >
+          <Layers size={16} />
+          Tous les projets (9)
+        </Link>
+
+        <a
+          href="https://github.com/BrandonPicq"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-5 py-3.5 rounded-xl font-medium text-xs sm:text-sm border border-[#d8d2c2] dark:border-border bg-paper-snow dark:bg-surface-elevated text-ink-stoned dark:text-muted hover:text-ink dark:hover:text-white transition-all duration-300 hover:scale-105 shadow-sm flex items-center gap-2"
+        >
+          <GithubIcon size={16} />
+          GitHub
+        </a>
+      </div>
+
+      {/* Mini-statistiques */}
+      <div className="pt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto text-left">
+        <div className="p-3 rounded-xl border border-[#d8d2c2] dark:border-border bg-paper-snow/70 dark:bg-surface-card/60">
+          <div className="text-lg font-bold text-vermillon dark:text-gold font-mono">9+</div>
+          <div className="text-[11px] text-ink-stoned dark:text-muted">Projets Développés</div>
+        </div>
+        <div className="p-3 rounded-xl border border-[#d8d2c2] dark:border-border bg-paper-snow/70 dark:bg-surface-card/60">
+          <div className="text-lg font-bold text-vermillon dark:text-gold font-mono">30+</div>
+          <div className="text-[11px] text-ink-stoned dark:text-muted">Endpoints REST</div>
+        </div>
+        <div className="p-3 rounded-xl border border-[#d8d2c2] dark:border-border bg-paper-snow/70 dark:bg-surface-card/60">
+          <div className="text-lg font-bold text-vermillon dark:text-gold font-mono">100%</div>
+          <div className="text-[11px] text-ink-stoned dark:text-muted">TypeScript & Docker</div>
+        </div>
+        <div className="p-3 rounded-xl border border-[#d8d2c2] dark:border-border bg-paper-snow/70 dark:bg-surface-card/60">
+          <div className="text-lg font-bold text-vermillon dark:text-gold font-mono">2026</div>
+          <div className="text-[11px] text-ink-stoned dark:text-muted">Stack Récente (React 19)</div>
+        </div>
+      </div>
     </section>
   );
 }
