@@ -49,6 +49,7 @@ export default function Sidebar() {
         <nav className="sidebar-secondary" aria-label="Navigation principale">
           <Link to="/projects" onClick={closeMenu} aria-current={pathname === "/projects" ? "page" : undefined}>Tous les projets</Link>
           <Link to="/about" onClick={closeMenu} aria-current={pathname === "/about" ? "page" : undefined}>Parcours</Link>
+          <Link to="/cv" onClick={closeMenu} aria-current={pathname === "/cv" ? "page" : undefined}>Curriculum Vitae</Link>
         </nav>
         <div className="sidebar-contact">
           <a href="mailto:brandon@epitech.eu">Contact <ArrowUpRight aria-hidden="true" /></a>

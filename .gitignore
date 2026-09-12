@@ -34,6 +34,10 @@ Thumbs.db
 /output/
 /tmp/
 
+# CV downloads regenerated from the website before every production build
+/public/CV_Brandon_Picq_Developpeur_Web_Full_Stack.pdf
+/public/CV_Brandon_Picq_Developpeur_Web_Full_Stack_Web.pdf
+
 # Python caches and local environments
 __pycache__/
 *.py[cod]

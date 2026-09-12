@@ -1,0 +1,382 @@
+/* src/pages/cv.css */
+/* Styles exclusifs pour le CV Éditorial Glacier & Export PDF */
+
+.cv-page-wrapper {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 2rem 0 5rem;
+}
+
+/* En-tête de la page avec contrôles */
+.cv-header-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--folio-line);
+}
+
+.cv-header-titles h1 {
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+  font-weight: 780;
+  line-height: 1.15;
+  color: var(--folio-ink);
+  margin-bottom: 0.35rem;
+}
+
+.cv-header-titles p {
+  color: var(--folio-muted);
+  font-size: 0.92rem;
+}
+
+.cv-actions-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Boutons d'action */
+.cv-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.86rem;
+  font-weight: 650;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 180ms ease;
+  border: 1px solid transparent;
+}
+
+.cv-action-btn.primary {
+  background: var(--folio-ink);
+  color: #f8fafc;
+}
+
+.cv-action-btn.primary:hover {
+  background: #1b4763;
+  transform: translateY(-1px);
+}
+
+.cv-action-btn.secondary {
+  background: var(--folio-paper);
+  color: var(--folio-ink);
+  border-color: var(--folio-line);
+}
+
+.cv-action-btn.secondary:hover {
+  background: #e2ecf1;
+}
+
+/* Conteneur de la feuille */
+.cv-sheet-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* Base de la feuille CV */
+.cv-sheet {
+  width: 100%;
+  max-width: 860px;
+  background: #ffffff;
+  color: var(--folio-ink);
+  box-shadow: 0 4px 30px rgba(21, 58, 80, 0.09);
+  border: 1px solid var(--folio-line);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  box-sizing: border-box;
+}
+
+/* ======================================================== */
+/* DESIGN ÉDITORIAL GLACIER                                  */
+/* ======================================================== */
+.cv-editorial-layout {
+  padding: 2.25rem 2.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+.cv-ed-masthead {
+  border-bottom: 2px solid var(--folio-ink);
+  padding-bottom: 1rem;
+}
+
+.cv-ed-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.cv-ed-top-row h2 {
+  font-size: 2.25rem;
+  font-weight: 850;
+  letter-spacing: -0.04em;
+  color: var(--folio-ink);
+  line-height: 1;
+}
+
+.cv-ed-role {
+  font-size: 1.08rem;
+  font-weight: 750;
+  color: var(--folio-ink);
+  margin-top: 4px;
+}
+
+.cv-ed-status-badge {
+  text-align: right;
+  background: var(--folio-paper);
+  border: 1px solid var(--folio-line);
+  border-radius: 4px;
+  padding: 0.45rem 0.85rem;
+}
+
+.cv-ed-status-badge .primary-role {
+  font-size: 0.85rem;
+  font-weight: 780;
+  color: var(--folio-ink);
+  display: block;
+}
+
+.cv-ed-status-badge .sub-role {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--folio-accent);
+}
+
+.cv-ed-meta-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  font-size: 0.76rem;
+  color: var(--folio-muted);
+  border-top: 1px solid var(--folio-line);
+  padding-top: 0.6rem;
+  font-weight: 550;
+}
+
+.cv-ed-meta-bar span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cv-ed-meta-bar svg {
+  color: var(--folio-accent);
+}
+
+.cv-ed-pitch {
+  font-size: 0.82rem;
+  line-height: 1.52;
+  color: #2c3e50;
+  border-left: 2.5px solid var(--folio-accent);
+  padding-left: 0.85rem;
+  margin-top: 0.65rem;
+  background: rgba(203, 221, 229, 0.15);
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Grille Asymétrique */
+.cv-ed-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 1.8rem;
+}
+
+.cv-ed-col-main,
+.cv-ed-col-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+.cv-ed-section-title {
+  font-size: 0.86rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--folio-ink);
+  border-bottom: 1.2px solid var(--folio-ink);
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.cv-ed-section-sub {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--folio-muted);
+  letter-spacing: normal;
+}
+
+.cv-items-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.cv-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cv-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.cv-item-title {
+  font-size: 0.88rem;
+  font-weight: 750;
+  color: var(--folio-ink);
+}
+
+.cv-item-context {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--folio-muted);
+}
+
+.cv-item-date {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--folio-accent);
+  white-space: nowrap;
+}
+
+.cv-item-desc {
+  font-size: 0.78rem;
+  color: #334155;
+  margin: 0.15rem 0;
+  line-height: 1.4;
+}
+
+.cv-item-bullets {
+  margin: 0.2rem 0 0.35rem 1.1rem;
+  padding: 0;
+  font-size: 0.76rem;
+  color: #334155;
+  line-height: 1.4;
+}
+
+.cv-item-bullets li {
+  margin-bottom: 0.2rem;
+}
+
+.cv-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.2rem;
+}
+
+.cv-tag {
+  background: var(--folio-paper);
+  color: var(--folio-ink);
+  border: 1px solid var(--folio-line);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+/* Cartouches Colonne Droite */
+.cv-ed-side-card {
+  background: var(--folio-paper);
+  border: 1px solid var(--folio-line);
+  border-radius: 4px;
+  padding: 0.85rem;
+}
+
+.cv-ed-side-card h4 {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--folio-ink);
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px dashed var(--folio-line);
+  padding-bottom: 0.25rem;
+}
+
+/* ======================================================== */
+/* REGLES D'IMPRESSION (Fidélité Totale au Visuel Écran)    */
+/* ======================================================== */
+@page {
+  size: auto;
+  margin: 0;
+}
+
+@media print {
+  /* Isoler la feuille sans modifier sa composition ni sa typographie. */
+  body:has(.cv-sheet) :is(.gallery-sidebar, .skip-link, .folio-footer, .cv-header-bar) {
+    display: none !important;
+  }
+
+  body:has(.cv-sheet),
+  body:has(.cv-sheet) #root,
+  body:has(.cv-sheet) :is(.folio-shell, .gallery-column, .gallery-main, .cv-page-wrapper, .cv-sheet-container) {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 0;
+    background: #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  body:has(.cv-sheet) .cv-page-wrapper {
+    /* Le générateur conserve la largeur mesurée de la preview desktop. */
+    width: var(--cv-export-width, 860px);
+    margin-inline: auto !important;
+  }
+
+  .cv-sheet {
+    box-shadow: none;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* ======================================================== */
+/* RESPONSIVE MOBILE / TABLETTE (ÉCRAN UNIQUEMENT)          */
+/* ======================================================== */
+@media screen and (max-width: 860px) {
+  .cv-sheet {
+    min-height: auto;
+  }
+  .cv-ed-grid {
+    grid-template-columns: 1fr;
+  }
+  .cv-ed-top-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .cv-ed-status-badge {
+    text-align: left;
+    width: 100%;
+  }
+}
