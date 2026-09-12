@@ -55,8 +55,8 @@ export default function CvLaterDemo() {
     >
       <div className="bg-[#f8f9fa] text-[#212529] min-h-[540px] font-sans antialiased flex flex-col justify-between">
         {/* Entête Bootstrap CV-Later */}
-        <div className="bg-white border-b border-[#dee2e6] px-4 sm:px-6 py-3 flex items-center justify-between shadow-sm">
-          <div className="flex items-center gap-2">
+        <div className="demo-adaptive-header bg-white border-b border-[#dee2e6] px-4 sm:px-6 py-3 flex items-center justify-between shadow-sm">
+          <div className="demo-adaptive-header__group flex items-center gap-2">
             <span className="bg-[#0d6efd] text-white px-2.5 py-1 rounded font-bold text-xs">CV</span>
             <h3 className="font-bold text-sm text-[#0d6efd] leading-none">CV-Later</h3>
             <span className="text-[11px] text-[#6c757d]"> — Generate your own CV !</span>
@@ -84,7 +84,7 @@ export default function CvLaterDemo() {
         {/* Corps 2 colonnes Bootstrap (Formulaire à gauche, Preview A4 à droite) */}
         <div className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-5 flex-1">
           {/* Formulaire à gauche avec sections numérotées exactes */}
-          <div className="lg:col-span-6 bg-white p-4 rounded-xl border border-[#dee2e6] shadow-sm space-y-4 max-h-[440px] overflow-y-auto">
+          <div className="cv-demo__form lg:col-span-6 bg-white p-4 rounded-xl border border-[#dee2e6] shadow-sm space-y-4 max-h-[440px] overflow-y-auto">
             {/* 1. Informations personnelles */}
             <div className="space-y-2 border-b border-[#dee2e6] pb-3">
               <h4 className="text-xs font-bold text-[#0d6efd] uppercase tracking-wide">
@@ -277,7 +277,7 @@ export default function CvLaterDemo() {
         </div>
 
         {/* Footer CV-Later */}
-        <div className="bg-[#212529] text-white px-4 sm:px-6 py-2 text-[10px] font-mono flex items-center justify-between">
+        <div className="bg-[#212529] text-white px-4 sm:px-6 py-2 text-[10px] font-mono flex flex-wrap gap-2 items-center justify-between">
           <span>CV-Later — PHP 8.0 + Dompdf Engine</span>
           <span>Bootstrap 5.3 + Live Form Validation</span>
         </div>

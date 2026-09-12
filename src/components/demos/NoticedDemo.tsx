@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { Search, MapPin, Bookmark, X, Check, ArrowRight } from "lucide-react";
 import MockupFrame from "./MockupFrame";
 
@@ -83,7 +83,21 @@ const realSampleJobs: JobOffer[] = [
   },
 ];
 
+function focusInDemo(element: HTMLElement | null) {
+  if (!element) return;
+  element.focus({ preventScroll: true });
+  const scrollRegion = element.closest<HTMLElement>(".demo-frame__content");
+  if (!scrollRegion || scrollRegion.scrollHeight <= scrollRegion.clientHeight) return;
+  const top = element.getBoundingClientRect().top - scrollRegion.getBoundingClientRect().top;
+  scrollRegion.scrollTo({ top: scrollRegion.scrollTop + top - 12, behavior: "auto" });
+}
+
 export default function NoticedDemo() {
+  const demoId = useId();
+  const detailRef = useRef<HTMLDivElement>(null);
+  const lastJobTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const applicationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [searchInput, setSearchInput] = useState("");
   const [locationInput, setLocationInput] = useState("");
   const [selectedContract, setSelectedContract] = useState<string>("all");
@@ -91,6 +105,14 @@ export default function NoticedDemo() {
   const [selectedJob, setSelectedJob] = useState<JobOffer | null>(null);
   const [appliedJobId, setAppliedJobId] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<"tableau" | "articles">("tableau");
+
+  useEffect(() => () => {
+    if (applicationTimerRef.current) clearTimeout(applicationTimerRef.current);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (selectedJob) focusInDemo(detailRef.current);
+  }, [selectedJob]);
 
   const todayStr = new Intl.DateTimeFormat("fr-FR", {
     weekday: "long",
@@ -119,17 +141,36 @@ export default function NoticedDemo() {
   };
 
   const handleApply = (jobId: number) => {
+    if (applicationTimerRef.current) clearTimeout(applicationTimerRef.current);
     setAppliedJobId(jobId);
-    setTimeout(() => setAppliedJobId(null), 3000);
+    applicationTimerRef.current = setTimeout(() => {
+      setAppliedJobId(null);
+      applicationTimerRef.current = null;
+    }, 3000);
+  };
+
+  const openJob = (job: JobOffer, trigger: HTMLButtonElement | null) => {
+    lastJobTriggerRef.current = trigger;
+    if (selectedJob?.id === job.id) focusInDemo(detailRef.current);
+    else setSelectedJob(job);
+  };
+
+  const closeJob = () => {
+    const trigger = lastJobTriggerRef.current;
+    focusInDemo(trigger?.isConnected ? trigger : searchRef.current);
+    setSelectedJob(null);
   };
 
   const handleReset = () => {
+    if (applicationTimerRef.current) clearTimeout(applicationTimerRef.current);
+    applicationTimerRef.current = null;
     setSearchInput("");
     setLocationInput("");
     setSelectedContract("all");
     setSelectedJob(null);
     setAppliedJobId(null);
     setActiveTab("tableau");
+    setFavorites([1]);
   };
 
   return (
@@ -149,8 +190,8 @@ export default function NoticedDemo() {
         </div>
 
         {/* Navbar exacte de NOT:ICED */}
-        <div className="border-b border-black/10 px-4 sm:px-8 py-3 bg-[#fffdf6]/90 flex items-center justify-between">
-          <div className="flex items-center gap-5">
+        <div className="noticed-demo__nav border-b border-black/10 px-4 sm:px-8 py-3 bg-[#fffdf6]/90 flex items-center justify-between">
+          <div className="noticed-demo__nav-group flex items-center gap-5">
             <button onClick={() => { setSelectedJob(null); setActiveTab("tableau"); }} className="flex items-baseline gap-1.5 cursor-pointer">
               <span className="text-[22px] font-black tracking-[-.02em] text-[#0d0202]">NOT</span>
               <span className="font-mono text-[10.5px] uppercase tracking-[.16em] text-[#b23a2c] font-bold">
@@ -158,9 +199,10 @@ export default function NoticedDemo() {
               </span>
             </button>
             <span className="h-5 w-px bg-black/20 hidden sm:block" />
-            <div className="hidden sm:flex items-center gap-5 text-[13px] uppercase font-semibold">
+            <div className="noticed-demo__tabs items-center gap-5 text-[13px] uppercase font-semibold">
               <button
                 onClick={() => { setSelectedJob(null); setActiveTab("tableau"); }}
+                aria-pressed={activeTab === "tableau"}
                 className={`pb-1 transition-colors cursor-pointer ${
                   activeTab === "tableau"
                     ? "border-b-2 border-[#b23a2c] text-[#b23a2c]"
@@ -171,6 +213,7 @@ export default function NoticedDemo() {
               </button>
               <button
                 onClick={() => { setSelectedJob(null); setActiveTab("articles"); }}
+                aria-pressed={activeTab === "articles"}
                 className={`pb-1 transition-colors cursor-pointer ${
                   activeTab === "articles"
                     ? "border-b-2 border-[#b23a2c] text-[#b23a2c]"
@@ -212,10 +255,13 @@ export default function NoticedDemo() {
           {activeTab === "tableau" ? (
             <div>
               {/* Barre de recherche Searchbar de NOT:ICED */}
-              <div className="bg-[#fffdf6] border border-[#0d0202]/15 p-3 rounded-none shadow-sm mb-6 grid grid-cols-1 md:grid-cols-12 gap-2 text-xs">
-                <div className="md:col-span-5 relative">
+              <div className="noticed-demo__filters bg-[#fffdf6] border border-[#0d0202]/15 p-3 rounded-none shadow-sm mb-6 grid gap-2 text-xs">
+                <div className="relative">
+                  <label htmlFor={`${demoId}-search`} className="sr-only">Métier, technologie ou mot-clé</label>
                   <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-[#8b8472]" />
                   <input
+                    ref={searchRef}
+                    id={`${demoId}-search`}
                     type="text"
                     placeholder="Métier, technologie, mot-clé..."
                     value={searchInput}
@@ -223,9 +269,11 @@ export default function NoticedDemo() {
                     className="w-full bg-[#f7f4ec] border border-[#0d0202]/15 pl-8 pr-3 py-1.5 text-xs text-[#0d0202] placeholder-[#8b8472] focus:outline-none focus:border-[#b23a2c]"
                   />
                 </div>
-                <div className="md:col-span-4 relative">
+                <div className="relative">
+                  <label htmlFor={`${demoId}-location`} className="sr-only">Ville, région ou télétravail</label>
                   <MapPin className="absolute left-3 top-2.5 w-3.5 h-3.5 text-[#8b8472]" />
                   <input
+                    id={`${demoId}-location`}
                     type="text"
                     placeholder="Ville, région, Remote..."
                     value={locationInput}
@@ -233,8 +281,10 @@ export default function NoticedDemo() {
                     className="w-full bg-[#f7f4ec] border border-[#0d0202]/15 pl-8 pr-3 py-1.5 text-xs text-[#0d0202] placeholder-[#8b8472] focus:outline-none focus:border-[#b23a2c]"
                   />
                 </div>
-                <div className="md:col-span-3">
+                <div>
+                  <label htmlFor={`${demoId}-contract`} className="sr-only">Type de contrat</label>
                   <select
+                    id={`${demoId}-contract`}
                     value={selectedContract}
                     onChange={(e) => setSelectedContract(e.target.value)}
                     className="w-full bg-[#f7f4ec] border border-[#0d0202]/15 px-2.5 py-1.5 text-xs text-[#0d0202] focus:outline-none focus:border-[#b23a2c] uppercase font-mono text-[11px]"
@@ -255,7 +305,7 @@ export default function NoticedDemo() {
               </div>
 
               {/* Grille des offres façon journal NOT:ICED */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="noticed-demo__jobs grid gap-4">
                 {filteredJobs.map((job) => {
                   const isFav = favorites.includes(job.id);
                   const isSelected = selectedJob?.id === job.id;
@@ -263,7 +313,7 @@ export default function NoticedDemo() {
                   return (
                     <article
                       key={job.id}
-                      onClick={() => setSelectedJob(job)}
+                      onClick={(event) => openJob(job, event.currentTarget.querySelector<HTMLButtonElement>("[data-job-open]"))}
                       className={`flex flex-col justify-between p-4 bg-[#fffdf6] border transition-all cursor-pointer hover:shadow-xl hover:shadow-[#0d0202]/10 ${
                         isSelected
                           ? "border-[#b23a2c] ring-1 ring-[#b23a2c] shadow-md"
@@ -277,8 +327,10 @@ export default function NoticedDemo() {
                           </span>
                           <button
                             onClick={(e) => toggleFavorite(job.id, e)}
-                            className="p-1 text-[#8b8472] hover:text-[#b23a2c] transition-colors"
+                            className="noticed-demo__favorite p-1 text-[#8b8472] hover:text-[#b23a2c] transition-colors"
                             title={isFav ? "Retirer des favoris" : "Ajouter aux favoris"}
+                            aria-label={`${isFav ? "Retirer des favoris" : "Ajouter aux favoris"} : ${job.title}`}
+                            aria-pressed={isFav}
                           >
                             <Bookmark size={14} fill={isFav ? "#b23a2c" : "none"} className={isFav ? "text-[#b23a2c]" : ""} />
                           </button>
@@ -303,12 +355,27 @@ export default function NoticedDemo() {
 
                       <div className="mt-4 pt-2.5 border-t border-[#0d0202]/10 flex items-center justify-between text-[10px] font-mono text-[#8b8472]">
                         <span>{job.created_at}</span>
-                        <span className="text-[#b23a2c] font-bold">Voir l'annonce →</span>
+                        <button
+                          type="button"
+                          data-job-open
+                          onClick={(event) => { event.stopPropagation(); openJob(job, event.currentTarget); }}
+                          className="noticed-demo__job-open text-[#b23a2c] font-bold inline-flex items-center gap-1"
+                          aria-label={`Voir l'annonce : ${job.title}`}
+                          aria-expanded={isSelected}
+                          aria-controls={isSelected ? `${demoId}-detail` : undefined}
+                        >
+                          Voir l'annonce <ArrowRight size={12} aria-hidden="true" />
+                        </button>
                       </div>
                     </article>
                   );
                 })}
               </div>
+              {filteredJobs.length === 0 && (
+                <p className="py-6 text-center text-sm text-[#55503f]" role="status">
+                  Aucune offre ne correspond à ces filtres. Essayez un autre mot-clé ou un autre contrat.
+                </p>
+              )}
             </div>
           ) : (
             /* Volet éditorial Articles de presse */
@@ -336,7 +403,14 @@ export default function NoticedDemo() {
 
         {/* Tiroir Fiche de Poste (JobDetailPanel de NOT:ICED) */}
         {selectedJob && (
-          <div className="border-t-2 border-[#0d0202] bg-[#fffdf6] px-4 sm:px-8 py-5 shadow-2xl animate-slideIn">
+          <div
+            ref={detailRef}
+            id={`${demoId}-detail`}
+            role="region"
+            aria-labelledby={`${demoId}-detail-title`}
+            tabIndex={-1}
+            className="noticed-demo__detail border-t-2 border-[#0d0202] bg-[#fffdf6] px-4 sm:px-8 py-5"
+          >
             <div className="flex items-start justify-between gap-4 pb-3 border-b border-[#0d0202]/15">
               <div>
                 <div className="flex items-center gap-2 mb-1">
@@ -345,23 +419,24 @@ export default function NoticedDemo() {
                   </span>
                   <span className="text-[11px] font-mono text-[#8b8472]">{selectedJob.created_at}</span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-black text-[#0d0202]">{selectedJob.title}</h3>
+                <h3 id={`${demoId}-detail-title`} className="text-lg sm:text-xl font-black text-[#0d0202]">{selectedJob.title}</h3>
                 <p className="text-xs font-serif italic text-[#55503f]">
                   {selectedJob.company} — {selectedJob.location}
                 </p>
               </div>
 
               <button
-                onClick={() => setSelectedJob(null)}
-                className="p-1 rounded text-[#8b8472] hover:text-[#0d0202] hover:bg-[#f7f4ec] transition-colors"
+                onClick={closeJob}
+                className="min-w-10 min-h-10 inline-flex items-center justify-center p-1 rounded text-[#8b8472] hover:text-[#0d0202] hover:bg-[#f7f4ec] transition-colors"
                 title="Fermer la fiche"
+                aria-label="Fermer la fiche de poste"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <div className="py-3 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-              <div className="md:col-span-2 space-y-2">
+            <div className="noticed-demo__detail-grid py-3 grid gap-4 text-xs">
+              <div className="space-y-2">
                 <p className="text-[#0d0202] leading-relaxed">{selectedJob.description}</p>
                 <div className="flex flex-wrap gap-1.5 pt-2">
                   {selectedJob.tags.map((tag) => (
@@ -389,7 +464,7 @@ export default function NoticedDemo() {
                 >
                   {appliedJobId === selectedJob.id ? (
                     <>
-                      <Check size={14} /> Candidature envoyée !
+                      <Check size={14} /> Candidature simulée
                     </>
                   ) : (
                     <>
@@ -401,6 +476,10 @@ export default function NoticedDemo() {
             </div>
           </div>
         )}
+
+        <span className="sr-only" role="status" aria-live="polite">
+          {appliedJobId ? "Candidature simulée. Aucune candidature n’a été envoyée." : ""}
+        </span>
 
         {/* Footer simple de NOT:ICED */}
         <div className="border-t border-black/10 px-4 sm:px-8 py-3 text-center text-[10px] font-mono text-[#8b8472] bg-[#f7f4ec]">

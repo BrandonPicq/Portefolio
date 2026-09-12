@@ -1,10 +1,8 @@
-// src/pages/ProjectDetail.tsx
-// Page détail d'un projet — Playground interactif & Fiche technique approfondie
-
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ExternalLink, GitBranch, Layers, Sparkles, CheckCircle2, Server } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, GitBranch } from "lucide-react";
 import { getProjectById, categoryLabels } from "../data/projects";
 import ProjectDemoRenderer from "../components/demos/ProjectDemoRenderer";
+import "./pages.css";
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
@@ -12,216 +10,96 @@ export default function ProjectDetail() {
 
   if (!project) {
     return (
-      <div className="animate-fadeIn text-center py-32 space-y-4">
-        <h1 className="text-3xl font-bold font-editorial dark:font-sans text-ink dark:text-white">
-          Projet introuvable
-        </h1>
-        <p className="text-sm text-ink-stoned dark:text-muted">Ce projet n'existe pas ou a été déplacé.</p>
-        <Link
-          to="/projects"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-vermillon text-white dark:bg-gold dark:text-black rounded-xl text-xs font-semibold"
-        >
-          <ArrowLeft size={16} />
-          Retour aux projets
-        </Link>
+      <div className="project-empty project-not-found">
+        <h1>Projet introuvable.</h1>
+        <p>Ce projet n'existe pas ou a été déplacé.</p>
+        <Link to="/projects" className="folio-link"><ArrowLeft size={18} aria-hidden="true" /> Retour aux projets</Link>
       </div>
     );
   }
 
-  const hasDemo = Boolean(project.demoType);
-
   return (
-    <div className="animate-fadeIn space-y-10 max-w-5xl mx-auto pb-16">
-      {/* Navigation retour */}
-      <div>
-        <Link
-          to="/projects"
-          className="inline-flex items-center gap-2 text-ink-stoned dark:text-muted hover:text-vermillon dark:hover:text-gold text-xs sm:text-sm transition-colors"
-        >
-          <ArrowLeft size={16} />
-          <span>Retour à la liste des projets</span>
-        </Link>
-      </div>
+    <article className="project-detail">
+      <Link to="/projects" className="folio-link project-back-link">
+        <ArrowLeft size={18} aria-hidden="true" /> Tous les projets
+      </Link>
 
-      {/* En-tête du projet */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="px-3 py-1 text-xs font-mono bg-vermillon/10 text-vermillon dark:bg-gold/10 dark:text-gold border border-vermillon/20 dark:border-gold/30 rounded-full font-semibold">
-            {categoryLabels[project.category]}
-          </span>
-          {project.featured && (
-            <span className="px-3 py-1 text-xs font-mono bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 rounded-full font-semibold">
-              ★ Projet Phare
-            </span>
-          )}
-        </div>
-
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <h1 className="text-3xl sm:text-5xl font-bold font-editorial dark:font-sans text-ink dark:text-white">
-              {project.title}
-            </h1>
-            <p className="text-base sm:text-xl text-ink-stoned dark:text-muted mt-1">{project.subtitle}</p>
+      <header className="page-heading project-detail-heading">
+        <h1>{project.title}</h1>
+        <p>{project.subtitle}</p>
+        <div className="project-detail-meta">
+          <span>{categoryLabels[project.category]}</span>
+          <div className="project-external-links">
+            {project.github && (
+              <a href={project.github} target="_blank" rel="noopener noreferrer" className="folio-link">
+                <GitBranch size={16} aria-hidden="true" /> Code source
+              </a>
+            )}
+            {project.demo && (
+              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="folio-link">
+                Démo externe <ArrowUpRight size={20} aria-hidden="true" />
+              </a>
+            )}
           </div>
-
-          {/* Liens externes */}
-          {(project.github || project.demo) && (
-            <div className="flex items-center gap-3 shrink-0">
-              {project.github && (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-paper-snow dark:bg-surface-elevated border border-[#d8d2c2] dark:border-border rounded-xl text-xs font-medium text-ink dark:text-white hover:border-vermillon dark:hover:border-gold transition-all shadow-sm"
-                >
-                  <GitBranch size={15} />
-                  Code source
-                </a>
-              )}
-              {project.demo && (
-                <a
-                  href={project.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-vermillon text-white dark:bg-gold dark:text-black rounded-xl text-xs font-semibold hover:opacity-90 transition-all shadow-sm"
-                >
-                  <ExternalLink size={15} />
-                  Démo Live Externe
-                </a>
-              )}
-            </div>
-          )}
         </div>
-      </section>
+      </header>
 
-      {/* 1. Banc d'essai / Simulateur Interactif */}
-      {hasDemo && (
-        <section className="space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Sparkles size={16} className="text-vermillon dark:text-gold" />
-              <h2 className="text-lg font-bold font-editorial dark:font-sans text-ink dark:text-white">
-                Simulateur d'Interface Interactif
-              </h2>
-            </div>
-            <span className="text-[11px] font-mono text-ink-sepia dark:text-muted">
-              Interagissez directement avec la maquette
-            </span>
+      {project.demoType && (
+        <section className="project-preview" aria-labelledby="project-preview-title">
+          <div className="project-preview-heading">
+            <h2 id="project-preview-title">À vous d'essayer.</h2>
+            <p>Aperçu interactif · Données de démonstration</p>
           </div>
-
-          <ProjectDemoRenderer project={project} />
+          <ProjectDemoRenderer key={project.id} project={project} />
+          <p className="project-preview-note">Explorez l'interface avec des données d'exemple. Cet aperçu fonctionne localement, sans connexion au serveur du projet.</p>
         </section>
       )}
 
-      {/* 2. Présentation & Rôle */}
-      <section className="bg-paper-snow dark:bg-surface-card border border-[#d8d2c2] dark:border-border rounded-2xl p-6 sm:p-8 shadow-sm space-y-4">
-        <h2 className="text-lg font-bold font-editorial dark:font-sans text-ink dark:text-white border-b border-[#d8d2c2] dark:border-border pb-2">
-          À propos du projet
-        </h2>
-        <p className="text-ink-stoned dark:text-muted-light leading-relaxed text-sm sm:text-base">
-          {project.longDescription || project.description}
-        </p>
+      <section className="project-detail-section content-section">
+        <h2>Le projet</h2>
+        <div className="project-detail-content">
+          <p>{project.longDescription || project.description}</p>
+        </div>
       </section>
 
-      {/* 3. Architecture Technique */}
       {project.architecture && (
-        <section className="bg-paper-snow dark:bg-surface-card border border-[#d8d2c2] dark:border-border rounded-2xl p-6 sm:p-8 shadow-sm space-y-4">
-          <div className="flex items-center gap-2.5 border-b border-[#d8d2c2] dark:border-border pb-2">
-            <div className="p-1.5 bg-vermillon/10 text-vermillon dark:bg-gold/10 dark:text-gold rounded-lg">
-              <Layers size={18} />
-            </div>
-            <h2 className="text-lg font-bold font-editorial dark:font-sans text-ink dark:text-white">
-              Architecture & Flux de Données
-            </h2>
-          </div>
-
-          <div className="font-mono text-xs sm:text-sm bg-paper-carton/60 dark:bg-surface-elevated p-4 rounded-xl border border-[#d8d2c2] dark:border-border text-ink dark:text-slate-200 overflow-x-auto leading-relaxed">
-            {project.architecture}
-          </div>
-
-          {/* Endpoints REST si documentés */}
-          {project.endpoints && project.endpoints.length > 0 && (
-            <div className="space-y-2 pt-2">
-              <h4 className="text-xs font-mono uppercase text-ink-sepia dark:text-muted tracking-wider">
-                Endpoints REST Clés :
-              </h4>
-              <div className="space-y-1.5 font-mono text-xs">
-                {project.endpoints.map((ep, idx) => (
-                  <div
-                    key={idx}
-                    className="p-2 rounded bg-paper-snow dark:bg-surface border border-[#d8d2c2] dark:border-border text-ink-stoned dark:text-slate-300 flex items-center gap-2"
-                  >
-                    <Server size={13} className="text-vermillon dark:text-gold shrink-0" />
-                    <span>{ep}</span>
-                  </div>
-                ))}
+        <section className="project-detail-section content-section">
+          <h2>Architecture</h2>
+          <div className="project-detail-content">
+            <p className="project-architecture">{project.architecture}</p>
+            {project.endpoints && project.endpoints.length > 0 && (
+              <div className="project-endpoints">
+                <h3>Routes de l'API</h3>
+                <ul>{project.endpoints.map((endpoint) => <li key={endpoint}><code>{endpoint}</code></li>)}</ul>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </section>
       )}
 
-      {/* 4. Points clés & Technologies */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Points clés */}
-        <section className="bg-paper-snow dark:bg-surface-card border border-[#d8d2c2] dark:border-border rounded-2xl p-6 shadow-sm space-y-4">
-          <h2 className="text-base font-bold font-editorial dark:font-sans text-ink dark:text-white border-b border-[#d8d2c2] dark:border-border pb-2">
-            Faits Marquants
-          </h2>
-          <ul className="space-y-2.5">
-            {project.highlights.map((h, idx) => (
-              <li key={idx} className="text-xs sm:text-sm text-ink-stoned dark:text-muted flex items-start gap-2.5">
-                <CheckCircle2 size={15} className="text-vermillon dark:text-gold shrink-0 mt-0.5" />
-                <span>{h}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
+      <section className="project-detail-section content-section">
+        <h2>Points clés</h2>
+        <div className="project-detail-content">
+          <ul className="project-highlights">{project.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul>
+        </div>
+      </section>
 
-        {/* Stack Technique & Métriques */}
-        <section className="bg-paper-snow dark:bg-surface-card border border-[#d8d2c2] dark:border-border rounded-2xl p-6 shadow-sm space-y-4">
-          <h2 className="text-base font-bold font-editorial dark:font-sans text-ink dark:text-white border-b border-[#d8d2c2] dark:border-border pb-2">
-            Technologies & Environnement
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-3 py-1.5 text-xs font-mono bg-paper-carton/60 dark:bg-surface-elevated border border-[#d8d2c2] dark:border-border rounded-lg text-ink dark:text-slate-200"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          {project.metrics && (
-            <div className="pt-3 border-t border-[#d8d2c2] dark:border-border space-y-2">
-              <h4 className="text-[11px] font-mono uppercase text-ink-sepia dark:text-muted">Métriques :</h4>
-              <div className="grid grid-cols-2 gap-2">
-                {project.metrics.map((m, mIdx) => (
-                  <div
-                    key={mIdx}
-                    className="p-2 rounded bg-paper-carton/40 dark:bg-surface border border-[#d8d2c2] dark:border-border text-center text-[11px] font-mono text-ink-stoned dark:text-muted"
-                  >
-                    {m}
-                  </div>
-                ))}
-              </div>
+      <section className="project-detail-section content-section">
+        <h2>Technologies</h2>
+        <div className="project-detail-content">
+          <ul className="project-tech-list project-detail-tech">{project.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
+          {project.metrics && project.metrics.length > 0 && (
+            <div className="project-facts">
+              <h3>En bref</h3>
+              <ul>{project.metrics.map((metric) => <li key={metric}>{metric}</li>)}</ul>
             </div>
           )}
-        </section>
-      </div>
+        </div>
+      </section>
 
-      {/* Footer Navigation */}
-      <nav className="border-t border-[#d8d2c2] dark:border-border pt-8 flex items-center justify-between text-xs">
-        <Link
-          to="/projects"
-          className="inline-flex items-center gap-2 text-ink-stoned dark:text-muted hover:text-vermillon dark:hover:text-gold transition-colors font-medium"
-        >
-          <ArrowLeft size={16} />
-          Retour à tous les projets
-        </Link>
+      <nav className="project-detail-footer" aria-label="Navigation des projets">
+        <Link to="/projects" className="folio-link"><ArrowLeft size={18} aria-hidden="true" /> Continuer à explorer</Link>
       </nav>
-    </div>
+    </article>
   );
 }

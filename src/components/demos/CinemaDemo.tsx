@@ -150,9 +150,9 @@ export default function CinemaDemo() {
           </div>
         )}
 
-        <div className="flex-1 flex">
+        <div className="cinema-demo__layout flex-1 flex">
           {/* Sidebar authentique de My Cinema */}
-          <aside className="w-48 bg-[#0f172a] p-4 border-r border-slate-700/60 flex flex-col justify-between shrink-0">
+          <aside className="cinema-demo__sidebar w-48 bg-[#0f172a] p-4 border-r border-slate-700/60 flex flex-col justify-between shrink-0">
             <div>
               <div className="flex items-center gap-2 mb-6 text-amber-400 font-bold text-sm">
                 <Film size={18} />
@@ -193,7 +193,7 @@ export default function CinemaDemo() {
           </aside>
 
           {/* Zone de contenu principale de My Cinema */}
-          <main className="flex-1 p-5 space-y-4 overflow-y-auto max-h-[480px]">
+          <main className="cinema-demo__main min-w-0 flex-1 p-5 space-y-4 overflow-y-auto max-h-[480px]">
             {activeNav === "screenings" && (
               <div className="space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-700">

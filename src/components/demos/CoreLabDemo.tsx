@@ -183,7 +183,7 @@ export default function CoreLabDemo() {
     >
       <div className="bg-[#d5d5d6] text-[#0d0d0d] min-h-[540px] font-sans flex flex-col justify-between selection:bg-[#092841]/20">
         {/* Navbar supérieure CoreLab (bg-nav / #092841) */}
-        <div className="bg-[#092841] text-white px-4 sm:px-6 py-3 flex items-center justify-between border-b border-[#0d0d0d]/40 shadow-md">
+        <div className="demo-adaptive-header bg-[#092841] text-white px-4 sm:px-6 py-3 flex items-center justify-between border-b border-[#0d0d0d]/40 shadow-md">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-[#44727d] flex items-center justify-center font-bold text-white text-xs shadow-inner">
               CL

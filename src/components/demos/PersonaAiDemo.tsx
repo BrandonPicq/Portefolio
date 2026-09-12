@@ -86,8 +86,8 @@ export default function PersonaAiDemo() {
     >
       <div className="bg-[#0f172a] text-slate-100 min-h-[540px] font-sans flex flex-col justify-between selection:bg-[#ff6d5a]/20">
         {/* Navbar n8n authentique */}
-        <div className="bg-[#1e293b] border-b border-slate-700/80 px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-sm">
-          <div className="flex items-center gap-3">
+        <div className="demo-adaptive-header bg-[#1e293b] border-b border-slate-700/80 px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-sm">
+          <div className="demo-adaptive-header__group flex items-center gap-3">
             <div className="w-7 h-7 rounded-lg bg-[#ff6d5a] flex items-center justify-center font-bold text-white text-xs shadow">
               n8n
             </div>

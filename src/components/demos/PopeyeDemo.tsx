@@ -54,12 +54,12 @@ export default function PopeyeDemo() {
     >
       <div className="bg-[#F7F8F9] text-[#254356] min-h-[540px] font-sans flex flex-col justify-between selection:bg-[#42A5F5]/20">
         {/* Navigation entre service Poll (Flask) et Result (Node) */}
-        <div className="bg-white border-b border-[#e2e8f0] px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-sm">
-          <div className="flex items-center gap-3">
+        <div className="demo-adaptive-header bg-white border-b border-[#e2e8f0] px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-sm">
+          <div className="demo-adaptive-header__group flex items-center gap-3">
             <span className="font-bold text-xs uppercase tracking-wider text-[#254356]">
               Architecture 3-Tier
             </span>
-            <div className="flex gap-1.5 bg-[#F7F8F9] p-1 rounded-lg border border-[#e2e8f0] text-xs font-semibold">
+            <div className="demo-adaptive-header__controls flex gap-1.5 bg-[#F7F8F9] p-1 rounded-lg border border-[#e2e8f0] text-xs font-semibold">
               <button
                 onClick={() => setViewMode("poll")}
                 className={`px-3 py-1 rounded-md transition-all cursor-pointer ${

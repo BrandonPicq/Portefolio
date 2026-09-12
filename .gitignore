@@ -7,11 +7,13 @@ yarn-error.log*
 # Vite
 dist/
 .vite/
+*.tsbuildinfo
 
 # Environment variables
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+!.env.sample
 
 # IDEs
 .vscode/
@@ -26,6 +28,16 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Local design drafts, CV exports and verification artifacts
+/.impeccable/
+/output/
+/tmp/
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.venv/
 
 Projects/
 /REFACTOR_PLAN.md

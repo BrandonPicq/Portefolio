@@ -1,85 +1,61 @@
-import React from "react";
-import { RefreshCw, Sparkles } from "lucide-react";
+import { useRef, type ReactNode } from "react";
+import { RotateCcw } from "lucide-react";
+import "./demo-frame.css";
 
 interface MockupFrameProps {
   title: string;
   url?: string;
   badge?: string;
   onReset?: () => void;
-  children: React.ReactNode;
+  children: ReactNode;
+  footerActions?: ReactNode;
   aspect?: "auto" | "video" | "wide";
   themeStyle?: "editorial" | "dark" | "auto";
 }
 
 export default function MockupFrame({
   title,
-  url = "https://demo.local/app",
-  badge = "Simulation Interactive",
   onReset,
   children,
+  footerActions,
   themeStyle = "auto",
 }: MockupFrameProps) {
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const resetDemo = () => {
+    onReset?.();
+    contentRef.current?.scrollTo({ top: 0, left: 0 });
+  };
+
   return (
-    <div
-      className={`rounded-2xl overflow-hidden border transition-all duration-300 shadow-2xl flex flex-col ${
-        themeStyle === "editorial"
-          ? "bg-paper-snow border-[#d8d2c2] text-ink shadow-editorial"
-          : "bg-surface-card border-border text-white shadow-card"
-      }`}
-    >
-      {/* Barre supérieure style macOS / Browser Frame */}
+    <div className="demo-frame" data-theme={themeStyle}>
       <div
-        className={`px-4 py-3 border-b flex items-center justify-between gap-3 text-xs select-none ${
-          themeStyle === "editorial"
-            ? "bg-paper-carton/80 border-[#d8d2c2] text-ink-stoned"
-            : "bg-surface-elevated/90 border-border text-muted"
-        }`}
+        ref={contentRef}
+        className="demo-frame__content"
+        role="region"
+        aria-label={`Démo interactive : ${title}. Zone défilante.`}
+        tabIndex={0}
       >
-        {/* Boutons fenêtre macOS */}
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/50 opacity-90 hover:opacity-100 transition-opacity" />
-          <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/50 opacity-90 hover:opacity-100 transition-opacity" />
-          <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]/50 opacity-90 hover:opacity-100 transition-opacity" />
-        </div>
-
-        {/* Barre d'adresse URL simulée */}
-        <div
-          title={title}
-          className={`flex-1 max-w-md mx-auto px-3 py-1 rounded-md border flex items-center justify-between font-mono text-[11px] truncate ${
-            themeStyle === "editorial"
-              ? "bg-paper-snow border-[#d8d2c2] text-ink-stoned"
-              : "bg-surface border-border text-muted-dark"
-          }`}
-        >
-          <span className="truncate flex items-center gap-1.5">
-            <span className="text-emerald-500">🔒</span>
-            {url}
-          </span>
-          <span className="text-[10px] opacity-60 font-sans hidden sm:inline">LIVE</span>
-        </div>
-
-        {/* Badges et contrôles */}
-        <div className="flex items-center gap-2">
-          {badge && (
-            <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-vermillon/10 text-vermillon border border-vermillon/20 dark:bg-gold/10 dark:text-gold dark:border-gold/30">
-              <Sparkles size={10} />
-              {badge}
-            </span>
-          )}
+        {children}
+      </div>
+      <footer className="demo-frame__footer">
+        <span>Données de démonstration</span>
+        <div className="demo-frame__actions">
+          {footerActions}
           {onReset && (
             <button
-              onClick={onReset}
+              type="button"
+              className="demo-frame__reset"
+              onClick={resetDemo}
+              aria-label={`Réinitialiser la démo ${title}`}
               title="Réinitialiser la démo"
-              className="p-1 rounded hover:bg-black/10 dark:hover:bg-white/10 text-muted hover:text-current transition-colors"
             >
-              <RefreshCw size={12} />
+              <RotateCcw size={15} aria-hidden="true" />
+              <span>Réinitialiser</span>
             </button>
           )}
         </div>
-      </div>
-
-      {/* Contenu interactif */}
-      <div className="flex-1 overflow-auto">{children}</div>
+      </footer>
     </div>
   );
 }

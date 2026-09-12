@@ -1,81 +1,58 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Sparkles, ArrowRight } from "lucide-react";
-import { getFeaturedProjects } from "../../data/projects";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
+import { galleryLabel, galleryProjects, getGalleryProject } from "../../data/gallery";
 import ProjectDemoRenderer from "../demos/ProjectDemoRenderer";
 
 export default function FeaturedDemos() {
-  const featuredProjects = getFeaturedProjects();
-  const [activeProjectId, setActiveProjectId] = useState<string>(featuredProjects[0]?.id || "noticed");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const project = getGalleryProject(searchParams.get("project"));
+  const index = galleryProjects.findIndex((item) => item.id === project.id);
+  const previous = galleryProjects[(index + galleryProjects.length - 1) % galleryProjects.length];
+  const next = galleryProjects[(index + 1) % galleryProjects.length];
+  const suggestions = galleryProjects.filter((item) => item.id !== project.id).slice(0, 2);
 
-  const activeProject = featuredProjects.find((p) => p.id === activeProjectId) || featuredProjects[0];
+  function selectProject(id: string) {
+    setSearchParams((params) => {
+      params.set("project", id);
+      return params;
+    }, { preventScrollReset: true });
+  }
 
   return (
-    <section id="featured-demos" className="py-12 space-y-8 scroll-mt-20">
-      {/* En-tête de section */}
-      <div className="text-center max-w-2xl mx-auto space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-vermillon/10 text-vermillon dark:bg-gold/10 dark:text-gold border border-vermillon/20 dark:border-gold/30">
-          <Sparkles size={13} />
-          <span>EXPÉRIENCE INTERACTIVE</span>
+    <section id="featured-demos" className="featured-gallery" aria-labelledby="active-project-title">
+      <div className="preview-heading">
+        <div className="preview-title-group">
+          <h2 id="active-project-title">{galleryLabel(project.id, project.title)}</h2>
+          <span className="preview-kind">Aperçu interactif</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-bold font-editorial dark:font-sans text-ink dark:text-white">
-          Démos d'Interface & Simulateurs
-        </h2>
-        <p className="text-sm text-ink-stoned dark:text-muted">
-          Testez directement le fonctionnement de mes derniers projets dans ces micro-environnements interactifs.
-        </p>
+        <Link className="folio-link project-detail-link" to={`/projects/${project.id}`}>
+          Voir le projet <ArrowUpRight className="accent-arrow" aria-hidden="true" />
+        </Link>
       </div>
-
-      {/* Onglets de sélection des projets phares */}
-      <div className="flex flex-wrap items-center justify-center gap-2 max-w-4xl mx-auto">
-        {featuredProjects.map((p) => {
-          const isActive = p.id === activeProjectId;
-          return (
-            <button
-              key={p.id}
-              onClick={() => setActiveProjectId(p.id)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer border ${
-                isActive
-                  ? "bg-vermillon text-white border-vermillon dark:bg-gold dark:text-black dark:border-gold shadow-md scale-105"
-                  : "bg-paper-snow dark:bg-surface-card border-[#d8d2c2] dark:border-border text-ink-stoned dark:text-muted hover:border-vermillon/50 dark:hover:border-gold/50"
-              }`}
-            >
-              {p.title}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Zone du simulateur actif + Détails */}
-      <div className="space-y-6">
-        {/* Le Simulateur interactif */}
-        <div className="animate-fadeIn">
-          <ProjectDemoRenderer project={activeProject} />
+      <p className="sr-only" role="status" aria-atomic="true">Aperçu de {project.title} affiché.</p>
+      <div className="demo-stage">
+        <ProjectDemoRenderer key={project.id} project={project} />
+        <div className="preview-arrows">
+          <button className="folio-icon-button" type="button" onClick={() => selectProject(previous.id)}
+            aria-label={`Projet précédent : ${galleryLabel(previous.id, previous.title)}`}>
+            <ArrowLeft aria-hidden="true" />
+          </button>
+          <button className="folio-icon-button" type="button" onClick={() => selectProject(next.id)}
+            aria-label={`Projet suivant : ${galleryLabel(next.id, next.title)}`}>
+            <ArrowRight aria-hidden="true" />
+          </button>
         </div>
-
-        {/* Barre d'informations rapides sous la démo */}
-        <div className="p-5 rounded-2xl border border-[#d8d2c2] dark:border-border bg-paper-snow/90 dark:bg-surface-card/90 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <h3 className="font-bold text-base text-ink dark:text-white">{activeProject.title}</h3>
-              <span className="text-xs font-mono text-vermillon dark:text-gold bg-vermillon/10 dark:bg-gold/10 px-2 py-0.5 rounded">
-                {activeProject.subtitle}
-              </span>
-            </div>
-            <p className="text-xs text-ink-stoned dark:text-muted max-w-2xl">{activeProject.description}</p>
-          </div>
-
-          <div className="flex items-center gap-3 shrink-0">
-            <Link
-              to={`/projects/${activeProject.id}`}
-              className="px-4 py-2 rounded-xl font-medium text-xs bg-paper-carton dark:bg-surface-elevated text-ink dark:text-white border border-[#d8d2c2] dark:border-border hover:border-vermillon dark:hover:border-gold flex items-center gap-2 transition-all hover:scale-105"
-            >
-              Fiche technique complète
-              <ArrowRight size={13} />
+      </div>
+      <nav className="next-projects" aria-label="La suite à explorer">
+        <span>La suite à explorer</span>
+        <div>
+          {suggestions.map((item) => (
+            <Link key={item.id} to={`/?project=${item.id}`} preventScrollReset>
+              {galleryLabel(item.id, item.title)} <ArrowRight aria-hidden="true" />
             </Link>
-          </div>
+          ))}
         </div>
-      </div>
+      </nav>
     </section>
   );
 }
