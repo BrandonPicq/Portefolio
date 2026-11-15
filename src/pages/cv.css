@@ -320,6 +320,35 @@
   padding-bottom: 0.25rem;
 }
 
+.cv-recruitment-note,
+.cv-portfolio-card {
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.cv-recruitment-note a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cv-portfolio-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cv-portfolio-link img {
+  width: 180px;
+  height: auto;
+  max-width: 100%;
+}
+
 /* ======================================================== */
 /* REGLES D'IMPRESSION (Fidélité Totale au Visuel Écran)    */
 /* ======================================================== */

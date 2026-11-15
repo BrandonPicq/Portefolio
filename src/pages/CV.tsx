@@ -56,7 +56,8 @@ export default function CV() {
                 </div>
 
                 <div className="cv-ed-status-badge">
-                  <span className="primary-role">Recherche d'alternance • Dès que possible</span>
+                  <span className="primary-role">Recherche d'alternance</span>
+                  <span className="primary-role">{identity.availability}</span>
                   <span className="sub-role">{identity.rhythm} • Web@cadémie</span>
                 </div>
               </div>
@@ -207,6 +208,30 @@ export default function CV() {
                       <span style={{ color: "#475569" }}>Epitanime & TNT (Orga conventions & dév)</span>
                     </div>
                   </div>
+                </div>
+
+                <div className="cv-ed-side-card cv-recruitment-note">
+                  <h4>Aide à l’embauche</h4>
+                  <p>
+                    Aide employeur possible pour un contrat d’apprentissage signé et débutant
+                    au plus tard le <strong>31 décembre 2026</strong>, sous conditions.
+                  </p>
+                  <a href="https://www.economie.gouv.fr/entreprises/gerer-ses-ressources-humaines-et-ses-salaries/embauche-dun-apprenti-vous-avez-droit-des-aides">
+                    Conditions sur economie.gouv.fr
+                  </a>
+                </div>
+
+                <div className="cv-ed-side-card cv-portfolio-card">
+                  <h4>Mes projets en ligne</h4>
+                  <a className="cv-portfolio-link" href={identity.portfolioUrl}>
+                    <img
+                      src={`${import.meta.env.BASE_URL}portfolio-qr.svg`}
+                      width="180"
+                      height="180"
+                      alt="QR code vers mon portfolio"
+                    />
+                    <span>nybilin.com</span>
+                  </a>
                 </div>
               </aside>
             </div>

@@ -75,7 +75,7 @@ export const cvData: CVData = {
     fullName: "Brandon Picq",
     role: "Développeur Web Full Stack",
     subrole: "Recherche d'alternance — Web@cadémie by Epitech",
-    availability: "Dès que possible — 05 Novembre 2027",
+    availability: "Dès que possible, jusqu’au 5 novembre 2027",
     rhythm: "6 semaines entreprise / 2 semaines école",
     location: "Paris (75) & Île-de-France • Télétravail bienvenu",
     email: "brandon.picq@gmail.com",
@@ -83,7 +83,7 @@ export const cvData: CVData = {
     phoneDisplay: "07 63 58 08 01",
     github: "https://github.com/BrandonPicq",
     githubDisplay: "github.com/BrandonPicq",
-    portfolioUrl: "https://brandonpicq.dev",
+    portfolioUrl: "https://nybilin.com",
     headline:
       "Issu d'un premier parcours en Data / IA (Simplon, certifié Azure DP-100, alternance DevOps chez Avanade) et actuellement en formation intensive par projets à la Web@cadémie by Epitech, je développe des applications web full-stack robustes et ergonomiques, alliant rigueur architecturale (React 19, TypeScript, Spring Boot, Express, Docker) et sensibilité produit.",
   },
@@ -119,7 +119,7 @@ export const cvData: CVData = {
       title: "NOT:ICED",
       subtitle: "Agrégateur d'emploi & presse moderne",
       context: "Projet Web@cadémie Epitech",
-      period: "2026",
+      period: "Août 2026",
       tags: ["React 19", "TypeScript", "Vite", "Tailwind CSS v4", "Express", "PostgreSQL", "Docker"],
       description: "Plateforme complète d'offres d'emploi et d'articles d'analyse avec design éditorial moderne.",
       bullets: [
@@ -136,7 +136,7 @@ export const cvData: CVData = {
       title: "ToyuWeb",
       subtitle: "Suite logicielle de synchronisation karaoké",
       context: "Projet Associatif — Epitanime",
-      period: "2026 — En cours",
+      period: "Jan 2026 — En cours",
       tags: ["React", "TypeScript", "FastAPI (Python 3.12)", "Electron", "Canvas HTML5", "Web Audio API"],
       description: "Modernisation et refonte totale du système de gestion et timing karaoké de l'association.",
       bullets: [
@@ -153,7 +153,7 @@ export const cvData: CVData = {
       title: "CoreLab LMS",
       subtitle: "Système de gestion d'apprentissage (MERN)",
       context: "Projet Web@cadémie Epitech",
-      period: "2026",
+      period: "Avril 2026",
       tags: ["MongoDB", "Express", "React", "Node.js", "JWT", "Docker", "Tailwind CSS"],
       description: "Plateforme e-learning complète avec espaces apprenant/formateur et suivi temps réel.",
       bullets: [
@@ -169,7 +169,7 @@ export const cvData: CVData = {
       title: "Connect'In V2",
       subtitle: "Réseau social pro — Migration Spring Boot",
       context: "Projet Epitech",
-      period: "2026",
+      period: "Fév 2026",
       tags: ["React", "TypeScript", "Spring Boot", "Java 21", "Spring Security", "MySQL", "Docker"],
       description: "Réseau social d'entreprise migré avec succès de Laravel vers Spring Boot.",
       bullets: [

@@ -13,7 +13,7 @@ export default function Home() {
       <section className="contact-section" aria-labelledby="contact-title">
         <h2 id="contact-title">Vous avez un projet<br />ou une opportunité ?</h2>
         <div>
-          <p>Actuellement en recherche d’opportunités en développement full-stack, en alternance ou en CDI.</p>
+          <p>Je recherche une alternance en développement full-stack, à commencer dès que possible.</p>
           <a className="folio-link" href="mailto:brandon@epitech.eu">Échangeons par email <ArrowUpRight className="accent-arrow" aria-hidden="true" /></a>
           <Link className="folio-link" to="/about">Découvrir mon parcours <ArrowUpRight className="accent-arrow" aria-hidden="true" /></Link>
         </div>
