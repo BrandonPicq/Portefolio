@@ -6,6 +6,7 @@ import { chromium } from 'playwright';
 export const CV_PDF_FILES = {
   a4: 'CV_Brandon_Picq_Developpeur_Web_Full_Stack.pdf',
   web: 'CV_Brandon_Picq_Developpeur_Web_Full_Stack_Web.pdf',
+  ats: 'CV_Brandon_Picq_Developpeur_Web_Full_Stack_ATS.pdf',
 };
 
 // CI uses Playwright's browser; an existing local Chrome installation also works.
@@ -80,10 +81,24 @@ export async function generateCvPdfs({ url, outputDir, diagnosticsDir }) {
     await page.pdf({ ...pdfOptions, width: `${width}px`, height: `${height}px` });
     const web = await page.pdf({ ...pdfOptions, width: `${width}px`, height: `${height}px`, scale: 1 });
     const a4 = await page.pdf({ ...pdfOptions, format: 'A4', scale: a4Scale });
+
+    const atsUrl = new URL(url);
+    atsUrl.searchParams.set('format', 'ats');
+    const atsResponse = await page.goto(atsUrl.href, { waitUntil: 'load' });
+    if (!atsResponse?.ok()) throw new Error('La version ATS du CV est indisponible.');
+    await page.locator('.cv-ats').waitFor({ state: 'visible' });
+    await page.evaluate(() => document.fonts.ready);
+    if (errors.length) throw new Error(errors.join('\n'));
+    await page.evaluate(() => { document.title = 'CV Brandon Picq - Développeur Web Full Stack'; });
+    const ats = await page.pdf({ ...pdfOptions, format: 'A4', preferCSSPageSize: true, scale: 1 });
+    if (diagnosticsDir) {
+      await writeFile(path.join(diagnosticsDir, 'ats-preview.txt'), await page.locator('.cv-ats').innerText());
+    }
     await mkdir(outputDir, { recursive: true });
-    // Both renders must succeed before replacing either downloadable file.
+    // All renders must succeed before replacing the downloadable files.
     await writeFile(path.join(outputDir, CV_PDF_FILES.web), web);
     await writeFile(path.join(outputDir, CV_PDF_FILES.a4), a4);
+    await writeFile(path.join(outputDir, CV_PDF_FILES.ats), ats);
     const result = { width, height, a4Scale, characters: text.length, files: CV_PDF_FILES };
     if (diagnosticsDir) await writeFile(path.join(diagnosticsDir, 'layout.json'), JSON.stringify(result, null, 2));
     return result;

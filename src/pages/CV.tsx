@@ -2,11 +2,16 @@
 import { Download, Mail, Phone, MapPin } from "lucide-react";
 import { GithubIcon } from "../components/icons/SocialIcons";
 import { cvData } from "../data/cv";
+import { useSearchParams } from "react-router-dom";
+import CVAts from "./CVAts";
 import "./cv.css";
 
 export default function CV() {
+  const [searchParams] = useSearchParams();
   const { identity, skills, projects, experiences, education } = cvData;
   const pdfBase = `${import.meta.env.BASE_URL}CV_Brandon_Picq_Developpeur_Web_Full_Stack`;
+
+  if (searchParams.get("format") === "ats") return <CVAts />;
 
   return (
     <div className="cv-page-wrapper">
@@ -14,11 +19,11 @@ export default function CV() {
       <header className="cv-header-bar">
         <div className="cv-header-titles">
           <h1>Curriculum Vitae</h1>
-          <p>Deux formats : une page A4 ou les dimensions de la preview web.</p>
+          <p>Le design en A4 ou au format web, et une version sur une colonne pour les candidatures.</p>
         </div>
 
         <div className="cv-actions-bar">
-          {/* Les deux PDF sont générés depuis cette même feuille de CV. */}
+          {/* Les trois PDF utilisent les mêmes données de CV. */}
           <a
             href={`${pdfBase}.pdf`}
             download="CV_Brandon_Picq_Developpeur_Web_Full_Stack.pdf"
@@ -37,6 +42,15 @@ export default function CV() {
           >
             <Download size={16} aria-hidden="true" />
             <span>Télécharger le PDF format web</span>
+          </a>
+          <a
+            href={`${pdfBase}_ATS.pdf`}
+            download="CV_Brandon_Picq_Developpeur_Web_Full_Stack_ATS.pdf"
+            className="cv-action-btn secondary"
+            title="Mise en page sobre sur une colonne, pour faciliter la lecture automatique"
+          >
+            <Download size={16} aria-hidden="true" />
+            <span>Télécharger le PDF ATS</span>
           </a>
         </div>
       </header>
@@ -63,6 +77,7 @@ export default function CV() {
               </div>
 
               <div className="cv-ed-meta-bar">
+                <span>{identity.age} ans</span>
                 <span>
                   <Mail size={12} aria-hidden="true" /> {identity.email}
                 </span>
@@ -88,10 +103,10 @@ export default function CV() {
               <div className="cv-ed-col-main">
                 {/* Projets */}
                 <section>
-                  <h3 className="cv-ed-section-title">
-                    <span>Projets Développés</span>
+                  <div className="cv-ed-section-title">
+                    <h3>Projets réalisés</h3>
                     <span className="cv-ed-section-sub">Web & Applications</span>
-                  </h3>
+                  </div>
                   <div className="cv-items-stack">
                     {projects.map((proj) => (
                       <div key={proj.id} className="cv-item">
@@ -125,10 +140,10 @@ export default function CV() {
 
                 {/* Expériences */}
                 <section>
-                  <h3 className="cv-ed-section-title">
-                    <span>Expériences Professionnelles</span>
+                  <div className="cv-ed-section-title">
+                    <h3>Expériences Professionnelles</h3>
                     <span className="cv-ed-section-sub">DevOps & Rigueur</span>
-                  </h3>
+                  </div>
                   <div className="cv-items-stack">
                     {experiences.map((exp) => (
                       <div key={`${exp.company}-${exp.role}`} className="cv-item">
@@ -162,7 +177,7 @@ export default function CV() {
               <aside className="cv-ed-col-side">
                 {/* Stack & Compétences */}
                 <div className="cv-ed-side-card">
-                  <h4>Stack Technique</h4>
+                  <h4>Compétences techniques</h4>
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
                     {skills.map((s) => (
                       <div key={s.category} style={{ fontSize: "0.74rem" }}>
@@ -208,17 +223,6 @@ export default function CV() {
                       <span style={{ color: "#475569" }}>Epitanime & TNT (Orga conventions & dév)</span>
                     </div>
                   </div>
-                </div>
-
-                <div className="cv-ed-side-card cv-recruitment-note">
-                  <h4>Aide à l’embauche</h4>
-                  <p>
-                    Aide employeur possible pour un contrat d’apprentissage signé et débutant
-                    au plus tard le <strong>31 décembre 2026</strong>, sous conditions.
-                  </p>
-                  <a href="https://www.economie.gouv.fr/entreprises/gerer-ses-ressources-humaines-et-ses-salaries/embauche-dun-apprenti-vous-avez-droit-des-aides">
-                    Conditions sur economie.gouv.fr
-                  </a>
                 </div>
 
                 <div className="cv-ed-side-card cv-portfolio-card">

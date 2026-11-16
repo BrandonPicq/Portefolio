@@ -48,6 +48,7 @@ export interface CVSkillCategory {
 export interface CVData {
   identity: {
     fullName: string;
+    age: number;
     role: string;
     subrole: string;
     availability: string;
@@ -73,6 +74,7 @@ export interface CVData {
 export const cvData: CVData = {
   identity: {
     fullName: "Brandon Picq",
+    age: 28,
     role: "Développeur Web Full Stack",
     subrole: "Recherche d'alternance — Web@cadémie by Epitech",
     availability: "Dès que possible, jusqu’au 5 novembre 2027",

@@ -227,6 +227,11 @@
   letter-spacing: normal;
 }
 
+.cv-ed-section-title h3 {
+  margin: 0;
+  font: inherit;
+}
+
 .cv-items-stack {
   display: flex;
   flex-direction: column;
@@ -320,17 +325,9 @@
   padding-bottom: 0.25rem;
 }
 
-.cv-recruitment-note,
 .cv-portfolio-card {
   font-size: 0.74rem;
   line-height: 1.45;
-}
-
-.cv-recruitment-note a {
-  display: inline-block;
-  margin-top: 0.5rem;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 .cv-portfolio-link {
@@ -352,12 +349,13 @@
 /* ======================================================== */
 /* REGLES D'IMPRESSION (Fidélité Totale au Visuel Écran)    */
 /* ======================================================== */
-@page {
+@page cv-visual {
   size: auto;
   margin: 0;
 }
 
 @media print {
+  body:has(.cv-sheet):not(:has(.cv-ats)) { page: cv-visual; }
   /* Isoler la feuille sans modifier sa composition ni sa typographie. */
   body:has(.cv-sheet) :is(.gallery-sidebar, .skip-link, .folio-footer, .cv-header-bar) {
     display: none !important;

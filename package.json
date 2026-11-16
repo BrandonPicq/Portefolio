@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && npm run build:pdf && vite build",
     "build:pdf": "node scripts/generate-pdf.mjs",
+    "check:cv": "node scripts/check-cv-pdf.mjs",
     "setup:pdf": "playwright install chromium",
     "lint": "eslint .",
     "preview": "vite preview"

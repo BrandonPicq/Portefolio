@@ -19,7 +19,7 @@ try {
     outputDir: path.join(root, 'public'),
     diagnosticsDir: process.env.CV_PDF_DIAGNOSTICS_DIR,
   });
-  console.log(`CV exporté : A4 à ${(result.a4Scale * 100).toFixed(1)} % et format web ${result.width} × ${result.height} px.`);
+  console.log(`CV exporté : A4 à ${(result.a4Scale * 100).toFixed(1)} %, format web ${result.width} × ${result.height} px et ATS sur une colonne.`);
 } finally {
   await server.close();
 }

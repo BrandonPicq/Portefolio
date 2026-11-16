@@ -1,12 +1,17 @@
 # Exports du CV
 
 Le contenu et le design ont une source commune : `src/pages/CV.tsx`,
-`src/data/cv.ts` et `src/pages/cv.css`. Aucun template HTML parallèle.
+`src/data/cv.ts` et `src/pages/cv.css`. La variante sur une colonne utilise
+`src/pages/CVAts.tsx` et les mêmes données, sans template HTML externe.
 
-Deux fichiers sont générés depuis la feuille affichée sur `/cv` :
+Trois fichiers sont générés :
 
 - **PDF A4** : une page, réduction uniforme et centrage horizontal.
 - **PDF format web** : une page aux dimensions de la preview desktop, sans réduction.
+- **PDF ATS** : flux sur une colonne (`/cv?format=ats`), police Arial de 10 points,
+  marges de 14 mm et pagination A4 naturelle. Expériences avant projets, liens
+  textuels, sans QR code. Cette présentation réduit les ambiguïtés de lecture ;
+  elle ne garantit ni score ni acceptation par un ATS.
 
 Le texte reste sélectionnable et les polices sont embarquées. Le format web est
 plus haut qu’une feuille A4 ; la version A4 réduit donc aussi la taille du texte.
@@ -18,7 +23,7 @@ Un Chrome déjà installé peut aussi servir de moteur local ; `PLAYWRIGHT_CHANN
 permet de choisir explicitement un canal compatible Playwright.
 
 - `npm run dev` : chaque téléchargement régénère les PDF depuis la page actuelle.
-- `npm run build:pdf` : régénère les deux fichiers dans `public/`.
+- `npm run build:pdf` : régénère les trois fichiers dans `public/`.
 - `npm run build` : vérifie TypeScript, génère les PDF puis construit le site.
 
 La CI installe Chromium avant le build. Les PDF générés sont ignorés par Git,
@@ -26,6 +31,10 @@ mais inclus dans `dist/`. Le site publié distribue ces fichiers sans serveur PD
 Les URL de téléchargement respectent la base Vite, y compris `/Portefolio/`.
 
 ## Vérification
+
+`npm run check:cv` vérifie les trois liens, les titres, le débordement mobile,
+le téléchargement ATS réel et l'ordre des sections. Les captures sont dans
+`tmp/pdfs/cv-ats-check/`. Il nécessite le même navigateur que l'export.
 
 Le générateur attend le chargement de la police locale et vérifie que les
 dimensions de la feuille restent identiques en mode impression. Une erreur
